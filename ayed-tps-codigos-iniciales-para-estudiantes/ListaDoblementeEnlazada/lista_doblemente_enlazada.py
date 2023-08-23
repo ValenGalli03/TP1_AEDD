@@ -6,11 +6,11 @@ class ListaDoblementeEnlazada:
         self.ultimo = None
         self.size = 0
     
-    def vacia(self):
+    def esta_vacia(self):
         return self.primero == None
     
-    def agregar_final(self, dato):
-        if self.vacia():        #si la lista esta vacia el primer nodo agredado sera el primer y ultimo nodo
+    def agregar_al_final(self, dato):
+        if self.esta_vacia():        #si la lista esta vacia el primer nodo agredado sera el primer y ultimo nodo
             self.primero = self.ultimo = Nodo(dato)
         else:  # caso contrario nuestra lista ya contiene un nodos
             aux = self.ultimo
@@ -18,8 +18,8 @@ class ListaDoblementeEnlazada:
             self.ultimo.anterior = aux
         self.size += 1
     
-    def agregar_inicio(self, dato):
-        if self.vacia():
+    def agregar_al_inicio(self, dato):
+        if self.esta_vacia():
             self.primero = self.ultimo = Nodo(dato)
         else:
             aux = Nodo(dato)
@@ -39,3 +39,6 @@ class ListaDoblementeEnlazada:
         while aux:
             print(aux.dato)
             aux = aux.anterior
+    
+    def tamanio(self):
+        return self.size
