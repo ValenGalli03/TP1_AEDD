@@ -66,3 +66,33 @@ class ListaDoblementeEnlazada:
             aux.anterior = actual.anterior
             actual.anterior.siguiente = aux
             actual.anterior = aux
+    
+    def extraer(self, posicion):
+        
+        if posicion < 0 or posicion >= self.tamanio():
+            raise IndexError('Indice fuera de rango.')
+        
+        if posicion == 0: #Evaluo el caso donde la posicion es 0 
+            dato = self.primero.dato
+            self.primero = self.primero.siguiente
+            if self.primero is not None:
+                self.primero.anterior = None
+            else:
+                self.ultimo = None
+
+        elif posicion == self.tamanio()-1: # Evaluo si la posicion es la ultima
+            dato = self.ultimo.dato
+            self.ultimo = self.ultimo.anterior
+            self.ultimo.siguiente = None
+            
+        else:
+            actual = self.primero
+            indice = 0
+            while indice < posicion:
+                actual = actual.siguiente
+                indice += 1
+            dato = actual.dato
+            actual.anterior.siguiente = actual.siguiente
+            actual.siguiente.anterior = actual.anterior
+        
+        return dato
