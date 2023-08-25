@@ -98,3 +98,12 @@ class ListaDoblementeEnlazada:
             actual.siguiente.anterior = actual.anterior
         self.size -= 1
         return dato
+        
+    def copiar(self):
+        copia_lista = ListaDoblementeEnlazada()
+        actual = self.primero
+        
+        while actual != None:
+            copia_lista.agregar_al_final(actual.dato)
+            actual = actual.siguiente
+        return copia_lista.recorrer_inicio()
