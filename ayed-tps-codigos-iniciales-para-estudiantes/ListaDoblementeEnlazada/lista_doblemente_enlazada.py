@@ -43,30 +43,32 @@ class ListaDoblementeEnlazada:
     def tamanio(self):
         return self.size
 
-    def insertar(self, dato, posicion):
+    def insertar(self, dato, posicion=None ):
         aux =  Nodo(dato)
         #caso especial si la lista esta vacia
         if self.esta_vacia():
             self.primero = aux
             self.ultimo = aux
             return
-        
-        actual = self.primero
-        indice = 0
-        while actual is not None and indice < posicion:
-            actual = actual.siguiente
-            indice +=1
-        if actual is None:
-            # Si la posición excede el tamaño de la lista, agregamos al final
+        #caso donde no se agregue posicion o la posicion sea mayor al tamanio de la lista
+        elif posicion is None or posicion >= self.size:
             aux.anterior = self.ultimo
             self.ultimo.siguiente = aux
             self.ultimo = aux
         else:
+            actual = self.primero
+            indice = 0
+
+            while indice < posicion:
+                actual = actual.siguiente
+                indice +=1
+                           
             aux.siguiente = actual
             aux.anterior = actual.anterior
             actual.anterior.siguiente = aux
             actual.anterior = aux
-    
+        self.size +=1
+        
     def extraer(self, posicion):
         
         if posicion < 0 or posicion >= self.tamanio():
@@ -94,5 +96,5 @@ class ListaDoblementeEnlazada:
             dato = actual.dato
             actual.anterior.siguiente = actual.siguiente
             actual.siguiente.anterior = actual.anterior
-        
+        self.size -= 1
         return dato
