@@ -16,26 +16,26 @@ class ListaDobleEnlazada:
         return self.tamanio
     
     def esta_vacia(self):
-        return self.primero == None
+        return self.cabeza == None
     
     def agregar_al_final(self, dato):
-        if self.esta_vacia():        #si la lista esta vacia el primer nodo agredado sera el primer y ultimo nodo
-            self.primero = self.ultimo = Nodo(dato)
+        if self.esta_vacia():        #si la lista esta vacia el primer nodo agredado sera el primer y cola nodo
+            self.cabeza = self.cola = Nodo(dato)
         else:  # caso contrario nuestra lista ya contiene un nodos
-            aux = self.ultimo
-            self.ultimo = aux.siguiente = Nodo(dato)
-            self.ultimo.anterior = aux
-        self.size += 1
+            aux = self.cola
+            self.cola = aux.siguiente = Nodo(dato)
+            self.cola.anterior = aux
+        self.tamanio += 1
     
     def agregar_al_inicio(self, dato):
         if self.esta_vacia():
-            self.primero = self.ultimo = Nodo(dato)
+            self.cabeza = self.cola = Nodo(dato)
         else:
             aux = Nodo(dato)
-            aux.siguiente = self.primero
-            self.primero.anterior = aux
-            self.primero = aux
-        self.size +=1
+            aux.siguiente = self.cabeza
+            self.cabeza.anterior = aux
+            self.cabeza = aux
+        self.tamanio +=1
 
     def recorrer_inicio(self):
         aux = self.primero
