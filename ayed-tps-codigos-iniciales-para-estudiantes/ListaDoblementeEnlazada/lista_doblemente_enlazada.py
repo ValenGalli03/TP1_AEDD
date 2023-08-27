@@ -1,10 +1,19 @@
 from nodo import Nodo
 
-class ListaDoblementeEnlazada:
+class ListaDobleEnlazada:
     def __init__(self):
-        self.primero = None
-        self.ultimo = None
-        self.size = 0
+        self.cabeza = None
+        self.cola = None
+        self.tamanio = 0
+    
+    def __iter__(self):
+        nodo_actual = self.cabeza
+        while nodo_actual is not None:
+            yield nodo_actual.dato
+            nodo_actual = nodo_actual.siguiente
+    
+    def __len__(self):
+        return self.tamanio
     
     def esta_vacia(self):
         return self.primero == None
