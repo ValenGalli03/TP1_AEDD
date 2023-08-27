@@ -38,81 +38,113 @@ class ListaDobleEnlazada:
         self.tamanio +=1
 
     def recorrer_inicio(self):
-        aux = self.primero
+        aux = self.cabeza
         while aux:
             print(aux.dato)
             aux = aux.siguiente
     
     def recorrer_fin(self):
-        aux = self.ultimo
+        aux = self.cola
         while aux:
             print(aux.dato)
             aux = aux.anterior
     
     def tamanio(self):
-        return self.size
-
+        return self.tamanio
+    
     def insertar(self, dato, posicion=None ):
         aux =  Nodo(dato)
         #caso especial si la lista esta vacia
         if self.esta_vacia():
-            self.primero = aux
-            self.ultimo = aux
+            self.cabeza = aux
+            self.cola = aux
+            self.tamanio +=1
             return
         #caso donde no se agregue posicion o la posicion sea mayor al tamanio de la lista
-        elif posicion is None or posicion >= self.size:
-            aux.anterior = self.ultimo
-            self.ultimo.siguiente = aux
-            self.ultimo = aux
+        if posicion == 0:
+            aux.siguiente = self.cabeza
+            self.cabeza.anterior = aux
+            self.cabeza = aux
+        elif posicion is None or posicion >= self.tamanio:
+            aux.anterior = self.cola
+            self.cola.siguiente = aux
+            self.cola = aux
         else:
-            actual = self.primero
+            actual = self.cabeza
             indice = 0
 
             while indice < posicion:
                 actual = actual.siguiente
                 indice +=1
-                           
+                        
             aux.siguiente = actual
             aux.anterior = actual.anterior
             actual.anterior.siguiente = aux
             actual.anterior = aux
-        self.size +=1
-        
-    def extraer(self, posicion):
-        
-        if posicion < 0 or posicion >= self.tamanio():
-            raise IndexError('Indice fuera de rango.')
-        
-        if posicion == 0: #Evaluo el caso donde la posicion es 0 
-            dato = self.primero.dato
-            self.primero = self.primero.siguiente
-            if self.primero is not None:
-                self.primero.anterior = None
-            else:
-                self.ultimo = None
+        self.tamanio +=1
 
-        elif posicion == self.tamanio()-1: # Evaluo si la posicion es la ultima
-            dato = self.ultimo.dato
-            self.ultimo = self.ultimo.anterior
-            self.ultimo.siguiente = None
+   
+    def extraer(self, posicion=None):
+        if posicion is None:
+            if self.tamanio == 0:
+                raise IndexError("La lista está vacía, no se puede extraer ningún elemento.")
             
+            dato = self.cola.dato
+            self.cola = self.cola.anterior
+            if self.cola is not None:
+                self.cola.siguiente = None
+            else:
+                self.cabeza = None
         else:
-            actual = self.primero
-            indice = 0
-            while indice < posicion:
-                actual = actual.siguiente
-                indice += 1
-            dato = actual.dato
-            actual.anterior.siguiente = actual.siguiente
-            actual.siguiente.anterior = actual.anterior
-        self.size -= 1
-        return dato
+            if posicion < -1 or posicion >= self.tamanio:
+                raise IndexError('Indice fuera de rango.')
+            
+            if posicion == -1:  # Manejar la posición -1
+                dato = self.cola.dato
+                self.cola = self.cola.anterior
+                self.cola.siguiente = None
+
+            elif posicion == 0: # si posicion es 0
+                dato = self.cabeza.dato
+                self.cabeza = self.cabeza.siguiente
+                if self.cabeza is not None:
+                    self.cabeza.anterior = None
+                else:
+                    self.cola = None
+
+            elif posicion == self.tamanio - 1: #si posicion es igual al tamanio
+                dato = self.cola.dato
+                self.cola = self.cola.anterior
+                self.cola.siguiente = None
+            else: # caso donde busque la posicion
+                actual = self.cabeza
+                indice = 0
+                while indice < posicion:
+                    actual = actual.siguiente
+                    indice += 1
+                dato = actual.dato
+                actual.anterior.siguiente = actual.siguiente
+                actual.siguiente.anterior = actual.anterior
         
+        self.tamanio -= 1
+        return dato
+
+
+
     def copiar(self):
-        copia_lista = ListaDoblementeEnlazada()
-        actual = self.primero
+        copia_lista = ListaDobleEnlazada()
+        actual = self.cabeza
         
         while actual != None:
             copia_lista.agregar_al_final(actual.dato)
             actual = actual.siguiente
-        return copia_lista.recorrer_inicio()
+        return copia_lista
+        
+    def invertir(self):
+        nodo_actual = self.cabeza
+        while nodo_actual:
+            temp = nodo_actual.anterior
+            nodo_actual.anterior = nodo_actual.siguiente
+            nodo_actual.siguiente = temp
+            nodo_actual = nodo_actual.anterior
+        self.cabeza, self.cola = self.cola, self.cabeza
