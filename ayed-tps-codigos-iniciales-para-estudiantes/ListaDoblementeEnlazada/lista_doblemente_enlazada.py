@@ -14,7 +14,7 @@ class ListaDobleEnlazada:
     
     def __len__(self):
         return self.tamanio
-    
+
     def esta_vacia(self):
         return self.cabeza == None
     
