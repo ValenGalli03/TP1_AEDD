@@ -148,3 +148,46 @@ class ListaDobleEnlazada:
             nodo_actual.siguiente = temp
             nodo_actual = nodo_actual.anterior
         self.cabeza, self.cola = self.cola, self.cabeza
+
+    def ordenar(self):
+        if self.cabeza is None:
+            return
+        
+        nodo_actual = self.cabeza
+        while nodo_actual:
+            min_nodo = nodo_actual
+            nodo_temp = nodo_actual.siguiente
+            while nodo_temp:
+                if nodo_temp.dato < min_nodo.dato:
+                    min_nodo = nodo_temp
+                nodo_temp = nodo_temp.siguiente
+            
+            # Intercambiar valores
+            if min_nodo != nodo_actual:
+                nodo_actual.dato, min_nodo.dato = min_nodo.dato, nodo_actual.dato
+            
+            nodo_actual = nodo_actual.siguiente    
+
+    def concatenar(self,lista):
+        lista_2_copia = lista.copiar()
+        cabeza_lista_2 = lista_2_copia.cabeza
+        ultimo_nodo_lista_1 = self.cola
+
+        ultimo_nodo_lista_1.siguiente = cabeza_lista_2
+        cabeza_lista_2.anterior = ultimo_nodo_lista_1
+        self.cola = lista_2_copia.cola
+
+        self.tamanio += len(lista)
+    
+    def __add__(self,lista):
+        lista_concatenada = ListaDobleEnlazada()
+        nodo_lista_1 = self.cabeza
+        while nodo_lista_1 != None:
+            lista_concatenada.agregar_al_final(nodo_lista_1.dato)
+            nodo_lista_1 = nodo_lista_1.siguiente
+        
+        nodo_lista_2 = lista.cabeza
+        while nodo_lista_2 != None:
+            lista_concatenada.agregar_al_final(nodo_lista_2.dato)
+            nodo_lista_2 = nodo_lista_2.siguiente
+        return lista_concatenada
