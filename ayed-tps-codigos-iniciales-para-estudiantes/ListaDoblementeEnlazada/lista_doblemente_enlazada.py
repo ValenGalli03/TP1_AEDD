@@ -151,9 +151,7 @@ class ListaDobleEnlazada:
 
     def ordenar(self):
         if self.cabeza is None:
-            return
-        
-        nodo_actual = self.cabeza
+            return nodo_actual = self.cabeza
         while nodo_actual:
             min_nodo = nodo_actual
             nodo_temp = nodo_actual.siguiente
