@@ -1,6 +1,6 @@
-from lista_doblemente_enlazada import ListaDoblementeEnlazada
+from lista_doblemente_enlazada import ListaDobleEnlazada
 
-lista = ListaDoblementeEnlazada()
+lista = ListaDobleEnlazada()
 
 lista.agregar_al_final(2)
 lista.agregar_al_inicio(1)
