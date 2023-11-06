@@ -32,3 +32,4 @@ def crear_archivo_de_datos(nombre):
             archivo.writelines(bloque)
             
 crear_archivo_de_datos('datos.txt')
+print ('datos.txt')
